@@ -1,0 +1,8 @@
+defkanji utf8
+escape ^z^z
+
+startup_message off
+autodetach on
+deflogin off
+hardstatus alwayslastline "%02c %m/%d| %`%-w%{=b bw}%n %t%{-}%+w"
+defscrollback 3000
