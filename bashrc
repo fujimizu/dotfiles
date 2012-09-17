@@ -13,14 +13,14 @@ alias ls='ls -F --color=auto'
 alias la='ls -a'
 alias ll='ls -al'
 alias sl='ls'
+alias cp='cp -p'
+alias grep='grep --color=auto'
 alias vi='vim'
 alias vie="vim '+e ++enc=euc-jp'"
 alias viu="vim '+e ++enc=utf-8'"
-alias memo='vi ~/text/ChangeLog'
-alias cp='cp -p'
+alias memo='vim ~/text/ChangeLog'
 alias syn='synergys -f --config ${HOME}/conf/synergy.conf'
 alias ty='tail -f /var/log/apache2/error.log'
-alias grep='grep --color=auto'
 
 ## environment variables
 export LANGUAGE=japanese
@@ -29,7 +29,6 @@ export LOCALE=ja_JP.UTF-8
 export LC_ALL=ja_JP.UTF-8
 export TERM=xterm-256color
 export CLICOLOR=true  #for screen
-#export LSCOLORS=dxfxfxfxbxfxfxBxBxDhDh
 export EDITOR=vim
 export PATH=${HOME}/bin:${HOME}/extlib/bin:${PATH}
 export VIM=/usr/share/vim
