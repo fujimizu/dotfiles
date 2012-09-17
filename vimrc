@@ -1,14 +1,15 @@
-"" for vundle
+"" for NeoBundle
 filetype off
 if has('vim_starting')
     set runtimepath+=$VIMHOME/neobundle.vim
     call neobundle#rc(expand('~/.bundle'))
 endif
-NeoBundle 'gmarik/vundle'
+NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'Markdown'
 filetype plugin indent on
 
 "" for japanese
