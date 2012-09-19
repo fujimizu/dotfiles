@@ -21,6 +21,11 @@ alias viu="vim '+e ++enc=utf-8'"
 alias memo='vim ~/text/ChangeLog'
 alias syn='synergys -f --config ${HOME}/conf/synergy.conf'
 alias ty='tail -f /var/log/apache2/error.log'
+alias dstat-full='dstat -Tclmdrn'
+alias dstat-mem='dstat -Tclm'
+alias dstat-cpu='dstat -Tclr'
+alias dstat-net='dstat -Tclnd'
+alias dstat-disk='dstat -Tcldr'
 
 ## environment variables
 export LANGUAGE=japanese
@@ -38,6 +43,9 @@ export PAGER=lv
 export JAVA_HOME=/usr/lib/jvm/java-7-oracle
 export PERL_CPANM_OPT="--local-lib=~/extlib"
 export PERL5LIB="$HOME/extlib/lib/perl5:$HOME/extlib/lib/perl5/x86_64-linux-gnu-thread-multi"
+
+export WORKON_HOME=$HOME/.virtualenvs
+source `which virtualenvwrapper.sh`
 
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion

@@ -1,4 +1,6 @@
-"" for NeoBundle
+" -----------------------------------------------
+" Neobundle
+" -----------------------------------------------
 filetype off
 if has('vim_starting')
     set runtimepath+=$VIMHOME/neobundle.vim
@@ -12,13 +14,14 @@ NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'Markdown'
 filetype plugin indent on
 
-"" for japanese
+" -----------------------------------------------
+" for japanese
+" -----------------------------------------------
 language ja_JP.UTF-8
 set fileformats=unix,dos,mac
 set encoding=utf8
 set fileencoding=utf8
 
-"" for character encoding
 if has('iconv')
   let s:enc_euc = 'euc-jp'
   let s:enc_jis = 'iso-2022-jp'
@@ -71,6 +74,9 @@ if exists('&ambiwidth')
   set ambiwidth=double
 endif
 
+" -----------------------------------------------
+" etc settings
+" -----------------------------------------------
 set nocompatible
 set incsearch
 set hlsearch
@@ -106,11 +112,15 @@ set wildmode=list:longest
 set t_kb=^V<BS>
 set t_kD=^V<Del>
 
-"" for ChagenLog
+" -----------------------------------------------
+" ChagenLog
+" -----------------------------------------------
 let g:changelog_timeformat = "%Y-%m-%d"
 let g:changelog_username = "Mizuki FUJISAWA  <fujisawa@bayon.cc>"
 
-"" for screen
+" -----------------------------------------------
+" screen
+" -----------------------------------------------
 if &term == "screen"
   set ttymouse=xterm2
 endif
@@ -118,7 +128,7 @@ if &term =~ "xterm-256color"
    set t_Co=256
 endif
 
-"" tab navigation like firefox
+" tab navigation like firefox
 nmap <C-S-tab> :tabprevious<cr>
 nmap <C-tab> :tabnext<cr>
 map <C-S-tab> :tabprevious<cr>
@@ -129,19 +139,22 @@ imap <C-tab> <ESC>:tabnext<cr>i
 nmap <C-t> :tabnew<cr>
 imap <C-t> <ESC>:tabnew<cr> 
 
-"" templates
+" -----------------------------------------------
+" templates
+" -----------------------------------------------
 autocmd BufNewFile * silent! 0r $VIMHOME/templates/%:e.tpl
 
-"" filetype
+" -----------------------------------------------
+" filetypes
+" -----------------------------------------------
 autocmd FileType cpp :set tabstop=4 shiftwidth=4 softtabstop=0 
 autocmd FileType c :set tabstop=4 shiftwidth=4 softtabstop=0 
 autocmd FileType java :set tabstop=4 shiftwidth=4 softtabstop=0 
 autocmd FileType python :set tabstop=4 shiftwidth=4 softtabstop=0 
 
-"" for unite.vim
-
-
-"" for neocomplcache
+" -----------------------------------------------
+" neocomplcache
+" -----------------------------------------------
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 " Use neocomplcache.
@@ -216,3 +229,9 @@ let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
 let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
+
+" -----------------------------------------------
+" unite.vim
+" -----------------------------------------------
+noremap <silent> <Leader>f :UniteWithCurrentDir file -direction=botright<CR>
+noremap <silent> <Leader>b :Unite buffer_tab file_mru -direction=botright<CR>

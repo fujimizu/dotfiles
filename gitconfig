@@ -1,3 +1,9 @@
 [user]
 	name = Mizuki Fujisawa
 	email = fujisawa@bayon.cc
+[core]
+	editor = vim
+    pager = lv -c
+[color]
+    ui = auto
+    diff = true
