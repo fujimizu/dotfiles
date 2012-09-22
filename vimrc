@@ -1,6 +1,6 @@
-" -----------------------------------------------
+" -------------------------------------------------------------------
 " Neobundle
-" -----------------------------------------------
+" -------------------------------------------------------------------
 filetype off
 if has('vim_starting')
     set runtimepath+=$VIMHOME/neobundle.vim
@@ -14,9 +14,9 @@ NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'Markdown'
 filetype plugin indent on
 
-" -----------------------------------------------
+" -------------------------------------------------------------------
 " for japanese
-" -----------------------------------------------
+" -------------------------------------------------------------------
 language ja_JP.UTF-8
 set fileformats=unix,dos,mac
 set encoding=utf8
@@ -74,9 +74,9 @@ if exists('&ambiwidth')
   set ambiwidth=double
 endif
 
-" -----------------------------------------------
+" -------------------------------------------------------------------
 " etc settings
-" -----------------------------------------------
+" -------------------------------------------------------------------
 set nocompatible
 set incsearch
 set hlsearch
@@ -112,15 +112,15 @@ set wildmode=list:longest
 set t_kb=^V<BS>
 set t_kD=^V<Del>
 
-" -----------------------------------------------
+" -------------------------------------------------------------------
 " ChagenLog
-" -----------------------------------------------
+" -------------------------------------------------------------------
 let g:changelog_timeformat = "%Y-%m-%d"
 let g:changelog_username = "Mizuki FUJISAWA  <fujisawa@bayon.cc>"
 
-" -----------------------------------------------
+" -------------------------------------------------------------------
 " screen
-" -----------------------------------------------
+" -------------------------------------------------------------------
 if &term == "screen"
   set ttymouse=xterm2
 endif
@@ -137,24 +137,32 @@ imap <C-S-tab> <ESC>:tabprevious<cr>i
 imap <C-tab> <ESC>:tabnext<cr>i
 "map <C-w> :tabclose<cr>
 nmap <C-t> :tabnew<cr>
-imap <C-t> <ESC>:tabnew<cr> 
+imap <C-t> <ESC>:tabnew<cr>
 
-" -----------------------------------------------
+" -------------------------------------------------------------------
 " templates
-" -----------------------------------------------
+" -------------------------------------------------------------------
 autocmd BufNewFile * silent! 0r $VIMHOME/templates/%:e.tpl
 
-" -----------------------------------------------
-" filetypes
-" -----------------------------------------------
-autocmd FileType cpp :set tabstop=4 shiftwidth=4 softtabstop=0 
-autocmd FileType c :set tabstop=4 shiftwidth=4 softtabstop=0 
-autocmd FileType java :set tabstop=4 shiftwidth=4 softtabstop=0 
-autocmd FileType python :set tabstop=4 shiftwidth=4 softtabstop=0 
+" -------------------------------------------------------------------
+" white space
+" -------------------------------------------------------------------
+highlight WhitespaceEOL ctermbg=red guibg=red
+match WhitespaceEOL /\s\+$/
 
-" -----------------------------------------------
+" -------------------------------------------------------------------
+" filetypes
+" -------------------------------------------------------------------
+autocmd FileType cpp :set tabstop=4 shiftwidth=4 softtabstop=0
+autocmd FileType c :set tabstop=4 shiftwidth=4 softtabstop=0
+autocmd FileType java :set tabstop=4 shiftwidth=4 softtabstop=0
+autocmd FileType python :set tabstop=4 shiftwidth=4 softtabstop=0
+
+" -------------------------------------------------------------------
 " neocomplcache
-" -----------------------------------------------
+" -------------------------------------------------------------------
+set completeopt=menu
+
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 " Use neocomplcache.
@@ -230,8 +238,8 @@ let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
 let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 
-" -----------------------------------------------
+" -------------------------------------------------------------------
 " unite.vim
-" -----------------------------------------------
-noremap <silent> <Leader>f :UniteWithCurrentDir file -direction=botright<CR>
-noremap <silent> <Leader>b :Unite buffer_tab file_mru -direction=botright<CR>
+" -------------------------------------------------------------------
+noremap <silent> <Leader>f :<C-u>UniteWithCurrentDir file -direction=botright<CR>
+noremap <silent> <Leader>b :<C-u>Unite buffer_tab file_mru -direction=botright<CR>
