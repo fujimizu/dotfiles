@@ -4,7 +4,7 @@
 filetype off
 if has('vim_starting')
     set runtimepath+=$VIMHOME/neobundle.vim
-    call neobundle#rc(expand('~/.bundle'))
+    call neobundle#rc(expand('~/.vim/bundle'))
 endif
 NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc'
@@ -12,6 +12,9 @@ NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'Markdown'
+NeoBundle 'kevinw/pyflakes-vim'
+NeoBundle 'tomasr/molokai'
+NeoBundle 'nanotech/jellybeans.vim'
 filetype plugin indent on
 
 " -------------------------------------------------------------------
@@ -100,8 +103,8 @@ set viminfo=""
 "set showtabline=1
 
 syntax on
-colorscheme ron
-"colorscheme torte
+colorscheme jellybeans
+"colorscheme ron
 
 set showcmd
 set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
@@ -111,6 +114,17 @@ set wildmode=list:longest
 
 set t_kb=^V<BS>
 set t_kD=^V<Del>
+
+" tab navigation like firefox
+nmap <C-S-tab> :tabprevious<cr>
+nmap <C-tab> :tabnext<cr>
+map <C-S-tab> :tabprevious<cr>
+map <C-tab> :tabnext<cr>
+imap <C-S-tab> <ESC>:tabprevious<cr>i
+imap <C-tab> <ESC>:tabnext<cr>i
+"map <C-w> :tabclose<cr>
+nmap <C-t> :tabnew<cr>
+imap <C-t> <ESC>:tabnew<cr>
 
 " -------------------------------------------------------------------
 " ChagenLog
@@ -127,17 +141,6 @@ endif
 if &term =~ "xterm-256color"
    set t_Co=256
 endif
-
-" tab navigation like firefox
-nmap <C-S-tab> :tabprevious<cr>
-nmap <C-tab> :tabnext<cr>
-map <C-S-tab> :tabprevious<cr>
-map <C-tab> :tabnext<cr>
-imap <C-S-tab> <ESC>:tabprevious<cr>i
-imap <C-tab> <ESC>:tabnext<cr>i
-"map <C-w> :tabclose<cr>
-nmap <C-t> :tabnew<cr>
-imap <C-t> <ESC>:tabnew<cr>
 
 " -------------------------------------------------------------------
 " templates
