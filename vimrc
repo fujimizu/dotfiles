@@ -8,9 +8,14 @@ if has('vim_starting')
 endif
 NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/vimfiler'
+NeoBundle 'Shougo/vimshell'
 NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'h1mesuke/unite-outline'
 NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'jakedouglas/exuberant-ctags'
 NeoBundle 'Markdown'
 NeoBundle 'kevinw/pyflakes-vim'
 NeoBundle 'tomasr/molokai'
@@ -18,7 +23,7 @@ NeoBundle 'nanotech/jellybeans.vim'
 filetype plugin indent on
 
 " -------------------------------------------------------------------
-" for japanese
+" japanese
 " -------------------------------------------------------------------
 language ja_JP.UTF-8
 set fileformats=unix,dos,mac
@@ -94,8 +99,13 @@ set ruler
 set nolist
 set tabstop=4
 set shiftwidth=4
+set softtabstop=0
 set expandtab
 set showmatch
+set splitbelow
+set splitright
+set cursorline
+set autoread
 set viminfo=""
 "set cindent
 "set paste
@@ -104,27 +114,15 @@ set viminfo=""
 
 syntax on
 colorscheme jellybeans
-"colorscheme ron
 
 set showcmd
-set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
+set statusline=%<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.(&bomb?':BOM':'').']'}%y%=%l,%c%V%8P
 set backspace=indent,eol,start
 set wildmenu
 set wildmode=list:longest
 
 set t_kb=^V<BS>
 set t_kD=^V<Del>
-
-" tab navigation like firefox
-nmap <C-S-tab> :tabprevious<cr>
-nmap <C-tab> :tabnext<cr>
-map <C-S-tab> :tabprevious<cr>
-map <C-tab> :tabnext<cr>
-imap <C-S-tab> <ESC>:tabprevious<cr>i
-imap <C-tab> <ESC>:tabnext<cr>i
-"map <C-w> :tabclose<cr>
-nmap <C-t> :tabnew<cr>
-imap <C-t> <ESC>:tabnew<cr>
 
 " -------------------------------------------------------------------
 " ChagenLog
@@ -161,6 +159,19 @@ autocmd FileType c :set tabstop=4 shiftwidth=4 softtabstop=0
 autocmd FileType java :set tabstop=4 shiftwidth=4 softtabstop=0
 autocmd FileType python :set tabstop=4 shiftwidth=4 softtabstop=0
 
+autocmd FileType python :inoremap # X#
+
+" -------------------------------------------------------------------
+" Automatically set permissions for files with shebang
+" -------------------------------------------------------------------
+function MakeScriptExecutable()
+    if getline(1) =~ "^#!.*/bin/"
+        silent !chmod +x <afile>
+    endif
+endfunction
+
+au BufWritePost * call MakeScriptExecutable()
+
 " -------------------------------------------------------------------
 " neocomplcache
 " -------------------------------------------------------------------
@@ -194,8 +205,8 @@ endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
 " Plugin key-mappings.
-imap <C-k> <Plug>(neocomplcache_snippets_expand)
-smap <C-k> <Plug>(neocomplcache_snippets_expand)
+"imap <C-k> <Plug>(neocomplcache_snippets_expand)
+"smap <C-k> <Plug>(neocomplcache_snippets_expand)
 inoremap <expr><C-g> neocomplcache#undo_completion()
 inoremap <expr><C-l> neocomplcache#complete_common_string()
 
@@ -206,7 +217,7 @@ inoremap <expr><C-l> neocomplcache#complete_common_string()
 " <CR>: close popup and save indent.
 inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>"
 " <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+"inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
@@ -227,7 +238,7 @@ inoremap <expr><C-e>  neocomplcache#cancel_popup()
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+"autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType perl setlocal omnifunc=perlcomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
@@ -242,7 +253,29 @@ let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
 let g:neocomplcache_omni_patterns.cpp = '\h\w*\%(\.\|->\)\h\w*\|\h\w*::'
 
 " -------------------------------------------------------------------
+" neosnippet
+" -------------------------------------------------------------------
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+
+" -------------------------------------------------------------------
 " unite.vim
 " -------------------------------------------------------------------
-noremap <silent> <Leader>f :<C-u>UniteWithCurrentDir file -direction=botright<CR>
+noremap <silent> <Leader>f :<C-u>UniteWithBufferDir -buffer-name=files file -direction=botright<CR>
 noremap <silent> <Leader>b :<C-u>Unite buffer_tab file_mru -direction=botright<CR>
+noremap <silent> <Leader>o :<C-u>Unite outline -direction=botright<CR>
