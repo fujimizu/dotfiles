@@ -1,4 +1,3 @@
-#PS1='[\u@\h \w]$ '
 PS1='${debian_chroot:+($debian_chroot)}[\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]]\$ '
 
 HISTCONTROL=ignoredups:ignorespace
@@ -36,7 +35,6 @@ export LC_ALL=ja_JP.UTF-8
 export TERM=xterm-256color
 #export CLICOLOR=true  #for screen
 export EDITOR=vim
-export PATH=${HOME}/bin:${HOME}/extlib/bin:${PATH}
 export VIM=/usr/share/vim
 export VIMHOME=${HOME}/.vim
 export PAGER=lv
@@ -44,10 +42,21 @@ export PAGER=lv
 export JAVA_HOME=/usr/lib/jvm/java-7-oracle
 export PERL_CPANM_OPT="--local-lib=~/extlib"
 export PERL5LIB="$HOME/extlib/lib/perl5:$HOME/extlib/lib/perl5/x86_64-linux-gnu-thread-multi"
+export DOCKER_HOST=tcp://localhost:4243
+export GOPATH=$HOME/.go/
+export GOROOT=/usr/local/opt/go/libexec/
+export PATH=${HOME}/bin:${HOME}/extlib/bin:$GOPATH/bin:$GOROOT/bin:${PATH}
 
 #export WORKON_HOME=$HOME/.virtualenvs
 #source `which virtualenvwrapper.sh`
 
-if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
-    . /etc/bash_completion
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
 fi
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
+
+## rbenv
+export PATH=$HOME/.rbenv/bin:$PATH
+eval "$(rbenv init - bash)"

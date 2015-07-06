@@ -7,12 +7,21 @@ if has('vim_starting')
     call neobundle#rc(expand('~/.vim/bundle'))
 endif
 NeoBundle 'Shougo/neobundle.vim'
-NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/vimproc', {
+    \ 'build' : {
+    \     'windows' : 'make -f make_mingw32.mak',
+    \     'cygwin' : 'make -f make_cygwin.mak',
+    \     'mac' : 'make -f make_mac.mak',
+    \     'unix' : 'make -f make_unix.mak',
+    \    },
+    \ }
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'h1mesuke/unite-outline'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'jakedouglas/exuberant-ctags'
@@ -21,6 +30,10 @@ NeoBundle 'kevinw/pyflakes-vim'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'nanotech/jellybeans.vim'
 NeoBundle 'bling/vim-airline'
+NeoBundle 'davidhalter/jedi-vim'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'rking/ag.vim'
+NeoBundle 'tpope/vim-dispatch'
 filetype plugin indent on
 
 " -------------------------------------------------------------------
@@ -107,7 +120,7 @@ set splitbelow
 set splitright
 set cursorline
 set autoread
-set viminfo=""
+"set viminfo=""
 "set cindent
 "set paste
 "set number
@@ -155,10 +168,12 @@ match WhitespaceEOL /\s\+$/
 " -------------------------------------------------------------------
 " filetypes
 " -------------------------------------------------------------------
-autocmd FileType cpp :set tabstop=4 shiftwidth=4 softtabstop=0
-autocmd FileType c :set tabstop=4 shiftwidth=4 softtabstop=0
-autocmd FileType java :set tabstop=4 shiftwidth=4 softtabstop=0
+autocmd FileType cpp :set tabstop=2 shiftwidth=2 softtabstop=0
+autocmd FileType c :set tabstop=2 shiftwidth=2 softtabstop=0
+autocmd FileType java :set tabstop=2 shiftwidth=2 softtabstop=0
 autocmd FileType python :set tabstop=4 shiftwidth=4 softtabstop=0
+autocmd FileType html :set tabstop=2 shiftwidth=2 softtabstop=0
+autocmd FileType javascript :set tabstop=2 shiftwidth=2 softtabstop=0
 
 autocmd FileType python :inoremap # X#
 
@@ -286,3 +301,45 @@ noremap <silent> <Leader>o :<C-u>Unite outline -direction=botright<CR>
 " -------------------------------------------------------------------
 let g:airline_left_sep=''
 let g:airline_right_sep=''
+
+" -------------------------------------------------------------------
+" quickrun
+" -------------------------------------------------------------------
+let g:quickrun_config = {
+    \   "_" : {
+    \       "runner" : "vimproc",
+    \       "runner/vimproc/updatetime" : 60
+    \   },
+\}
+
+" -------------------------------------------------------------------
+" jedi
+" -------------------------------------------------------------------
+if !exists('g:neocomplcache_omni_functions')
+  let g:neocomplcache_omni_functions = {}
+endif
+let g:neocomplcache_omni_functions['python'] = 'jedi#completions'
+if !exists('g:neocomplcache_force_omni_patterns')
+  let g:neocomplcache_force_omni_patterns = {}
+endif
+let g:neocomplcache_force_omni_patterns.python = '[^. \t]\.\w*'
+
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#popup_select_first = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#rename_command = '<Leader>R'
+
+" -------------------------------------------------------------------
+" golang
+" -------------------------------------------------------------------
+" :Fmt などで gofmt の代わりに goimports を使う
+let g:gofmt_command = 'goimports'
+
+" Go に付属の plugin と gocode を有効にする
+set rtp^=${GOROOT}/misc/vim
+set rtp^=${GOPATH}/src/github.com/nsf/gocode/vim
+
+" 保存時に :Fmt する
+au BufWritePre *.go Fmt
+au BufNewFile,BufRead *.go set sw=4 noexpandtab ts=4
+au FileType go compiler go
