@@ -9,7 +9,6 @@ umask 022
 
 ## aliases
 alias ls='ls -G -F'
-#alias ls='ls -F --color=auto'
 alias la='ls -a'
 alias ll='ls -al'
 alias sl='ls'
@@ -19,13 +18,7 @@ alias vi='vim'
 alias vie="vim '+e ++enc=euc-jp'"
 alias viu="vim '+e ++enc=utf-8'"
 alias memo='vim ~/text/ChangeLog'
-alias syn='synergys -f --config ${HOME}/conf/synergy.conf'
-alias ty='tail -f /var/log/apache2/error.log'
-alias dstat-full='dstat -Tclmdrn'
-alias dstat-mem='dstat -Tclm'
-alias dstat-cpu='dstat -Tclr'
-alias dstat-net='dstat -Tclnd'
-alias dstat-disk='dstat -Tcldr'
+alias jp='jupyter notebook'
 
 ## environment variables
 export LANGUAGE=japanese
@@ -35,7 +28,7 @@ export LC_ALL=ja_JP.UTF-8
 export TERM=xterm-256color
 #export CLICOLOR=true  #for screen
 export EDITOR=vim
-export VIM=/usr/share/vim
+export VIM=/usr/local/share/vim
 export VIMHOME=${HOME}/.vim
 export PAGER=lv
 #export LD_LIBRARY_PATH=/usr/lib/octave-3.0.0
@@ -46,17 +39,8 @@ export DOCKER_HOST=tcp://localhost:4243
 export GOPATH=$HOME/.go/
 export GOROOT=/usr/local/opt/go/libexec/
 export PATH=${HOME}/bin:${HOME}/extlib/bin:$GOPATH/bin:$GOROOT/bin:${PATH}
-
-#export WORKON_HOME=$HOME/.virtualenvs
-#source `which virtualenvwrapper.sh`
+export GNUTERM=x11
 
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion
 fi
-
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"
-
-## rbenv
-export PATH=$HOME/.rbenv/bin:$PATH
-eval "$(rbenv init - bash)"
